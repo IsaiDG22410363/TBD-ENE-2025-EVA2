@@ -1,0 +1,229 @@
+EXA_2
+MySQL Shell 8.0.41
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 17
+Server version: 8.0.41 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > create database exa2_tbd;
+Query OK, 1 row affected (0.0215 sec)
+ MySQL  localhost:3306 ssl  SQL > use exa2_tbd
+Default schema set to `exa2_tbd`.
+Fetching global names, object names from `exa2_tbd` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table alumnos (
+                                         -> id_alunno int auto_increment primary key,
+                                         -> nombre varchar(100
+                                         -> ).
+                                         -> ^C
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table alumnos(
+                                         -> id_alumno int auto_intremente primaty key,
+                                         -> nombre varchar(100) not null,
+                                         -> carrera varchar (100));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_intremente primaty key,
+nombre varchar(100) not null,
+carrera varchar (100)' at line 2
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table alumnos( id_alumno int auto_intrement primaty key, nombre varchar(100) not null, carrera varchar (100));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_intrement primaty key, nombre varchar(100) not null, carrera varchar (100))' at line 1
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table alumnos( id_alumno int auto_intrement primary key, nombre varchar(100) not null, carrera varchar (100));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_intrement primary key, nombre varchar(100) not null, carrera varchar (100))' at line 1
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table alumnos(
+                                         -> id_alumno int auto_increment primary key,
+                                         -> nombre varchar(100) not null,
+                                         -> carrera varchar(100));
+Query OK, 0 rows affected (0.0456 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table cursos(
+                                         -> id_cursos int auto_increment primary key,
+                                         -> nombre_cuerso varchar(100) not null,
+                                         -> creditos int);
+Query OK, 0 rows affected (0.0447 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table inscripciones (
+                                         -> id_inscripciones int auto_increment primary key,
+                                         -> id_alumno int,
+                                         -> id_curso int,
+                                         -> fecha_inscripcion date,
+                                         -> foreing key (id_alumno) references alumnos(id_alumno),
+                                         -> foreing key (id_curso) references cursos(id_curso));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key (id_alumno) references alumnos(id_alumno),
+foreing key (id_curso) references' at line 6
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table inscripciones ( id_inscripciones int auto_increment primary key, id_alumno int, id_curso int, fecha_inscripcion date, foreing key (id_alumno) references alumnos (id_alumno), foreing key (id_curso) references cursos(id_curso));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key (id_alumno) references alumnos (id_alumno), foreing key (id_curso) reference' at line 1
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table inscripciones (
+                                         -> id_inscripcion int auto_increment primary key,
+                                         -> id_alumno int,
+                                         -> id_curso int,
+                                         -> fecha_inscripcion date,
+                                         -> foreign key (id_alumno) references alumnos(id_alumno),
+                                         -> foreign key (id_curso) references cursos(id_cursos));
+Query OK, 0 rows affected (0.1021 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into alumnos (nombre, carrera) values
+                                         -> ('Ana Lopez', 'Ingenieria en sistemas'),
+                                         -> ('Carlos Perez','Administracion'),
+                                         -> ('Luisa Martinez','Ingenieria Industrial');
+Query OK, 3 rows affected (0.0298 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into cursos (nombre_curso, creditos) values
+                                         -> ('Base de Datos',6),
+                                         -> ('Contabilidad I',5),
+                                         -> ('Marketing Digital',4);
+ERROR: 1054 (42S22): Unknown column 'nombre_curso' in 'field list'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into inscripciones (id_alumno, id_curso, fecha_inscripcion) values
+                                         -> (1,1,'2025-05-01'),
+                                         -> (1,2,'2025-05-01'),
+                                         -> (2,1,'2025-05-02'),
+                                         -> (2,3,'2025-05-02'),
+                                         -> (3,2,'2025-05-03');
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`exa2_tbd`.`inscripciones`, CONSTRAINT `inscripciones_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_cursos`))
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into inscripciones (id_alumno, id_cursos, fecha_inscripcion) values (1,1,'2025-05-01'), (1,2,'2025-05-01'), (2,1,'2025-05-02'), (2,3,'2025-05-02'), (3,2,'2025-05-03');
+ERROR: 1054 (42S22): Unknown column 'id_cursos' in 'field list'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into inscripciones (id_alumno, id_curso, fecha_inscripcion) values (1,1,'2025-05-01'), (1,2,'2025-05-01'), (2,1,'2025-05-02'), (2,3,'2025-05-02'), (3,2,'2025-05-03');
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`exa2_tbd`.`inscripciones`, CONSTRAINT `inscripciones_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_cursos`))
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into inscripciones (id_alumno, id_curso, fecha_inscripcion) values
+                                         -> (1, 1, '2025-05-01'),
+                                         -> (1, 2, '2025-05-01'),
+                                         -> (2, 1, '2025-05-02'),
+                                         -> (2, 3, '2025-05-02'),
+                                         -> (3, 2, '2025-05-03');
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`exa2_tbd`.`inscripciones`, CONSTRAINT `inscripciones_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_cursos`))
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into inscripciones (id_alumno, id_curso, fecha_inscripcion) values (1, 1, '2025-05-01'), (1, 2, '2025-05-01'), (2, 1, '2025-05-02'), (2, 3, '2025-05-02'), (3, 2, '2025-05-03');
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`exa2_tbd`.`inscripciones`, CONSTRAINT `inscripciones_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_cursos`))
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into inscripciones (id_alumno, id_cursos, fecha_inscripcion) values (1, 1, '2025-05-01'), (1, 2, '2025-05-01'), (2, 1, '2025-05-02'), (2, 3, '2025-05-02'), (3, 2, '2025-05-03');
+ERROR: 1054 (42S22): Unknown column 'id_cursos' in 'field list'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > DROP TABLE IF EXISTS inscripciones;
+Query OK, 0 rows affected (0.0505 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > CREATE TABLE inscripciones (
+                                         ->     id_inscripcion INT AUTO_INCREMENT PRIMARY KEY,
+                                         ->     id_alumno INT,
+                                         ->     id_curso INT,
+                                         ->     fecha_inscripcion DATE,
+                                         ->     FOREIGN KEY (id_alumno) REFERENCES alumnos(id_alumno),
+                                         ->     FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
+                                         -> );
+ERROR: 3734 (HY000): Failed to add the foreign key constraint. Missing column 'id_curso' for constraint 'inscripciones_ibfk_2' in the referenced table 'cursos'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > DROP TABLE IF EXISTS cursos;
+Query OK, 0 rows affected (0.0372 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table cursos(
+                                         -> id_cursoint autoincrement primary key,
+                                         -> numbre_curso varchar(100) not null,
+                                         -> creditos int);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'autoincrement primary key,
+numbre_curso varchar(100) not null,
+creditos int)' at line 2
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table cursos( id_cursoint auto_increment primary key, numbre_curso varchar(100) not null, creditos int);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_increment primary key, numbre_curso varchar(100) not null, creditos int)' at line 1
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table cursos( id_curso int auto_increment primary key, numbre_curso varchar(100) not null, creditos int);
+Query OK, 0 rows affected (0.0485 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > create table inscripciones(
+                                         -> id_inscripciones int auto_increment primary key,
+                                         -> id_alumno int,
+                                         -> id_curso int,
+                                         -> fecha_inscripcion date,
+                                         -> foreign key (id_alumno) references alumnos(id_alumno),
+                                         -> foreign key (id_curso) references cursos(id_curso));
+Query OK, 0 rows affected (0.0960 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > ister into cursos (numbre_curso, creditos) values
+                                         -> ('Base de Datos',6),
+                                         -> ('Contabilidad I', 5),
+                                         -> ('Marketing Digital', 4);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ister into cursos (numbre_curso, creditos) values
+('Base de Datos',6),
+('Contabi' at line 1
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > istert into cursos (numbre_curso, creditos) values ('Base de Datos',6), ('Contabilidad I', 5), ('Marketing Digital', 4);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'istert into cursos (numbre_curso, creditos) values ('Base de Datos',6), ('Contab' at line 1
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into cursos (nombre_curso, creditos) values
+                                         -> ('Base de Datos', 6),
+                                         -> ('Contabilidad', 5),
+                                         -> ('Marketing Digital', 4);
+ERROR: 1054 (42S22): Unknown column 'nombre_curso' in 'field list'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into cursos (numbre_curso, creditos) values ('Base de Datos', 6), ('Contabilidad', 5), ('Marketing Digital', 4);
+Query OK, 3 rows affected (0.0196 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert into inscripciones (id_alumno, id_curso, fecha_inscripcion) values
+                                         -> (1, 1, '2025-05-01'),
+                                         -> (1, 2, '2025-05-01'),
+                                         -> (2, 1, '2025-05-02'),
+                                         -> (2, 3, '2025-05-02'),
+                                         -> (3, 2, '2025-05-03');
+Query OK, 5 rows affected (0.0236 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre as alumno, c.nombre_curso as curso, i.fecha_inscripcion from inscripciones i
+                                         -> join alumnos a on i.id^C
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombres as nombre_alumno, c.nombre_curso as nombre_curso, i.fecha_inscripcion
+                                         -> from inscripciones i
+                                         -> join alumnos a on i.id_alumno = a.id_alumno
+                                         -> join cursos c on i.id_curso = c.id_curso;
+ERROR: 1054 (42S22): Unknown column 'a.nombres' in 'field list'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre as nombre_alumno, c.nombre_curso as nombre_curso, i.fecha_inscripcion from inscripciones i join alumnos a on i.id_alumno = a.id_alumno join cursos c on i.id_curso = c.id_curso;
+ERROR: 1054 (42S22): Unknown column 'c.nombre_curso' in 'field list'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre as nombre_alumno, c.nombre_curso as nombre_curso, i.fecha_inscripcion from inscripciones i join alumnos a on i.id_alumno = a.id_alumno join cursos c on i.id_curso = c.id_curso;
+ERROR: 1054 (42S22): Unknown column 'c.nombre_curso' in 'field list'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre as nombre_alumno, c.nombre_curso as nombre_curso, i.fecha_inscripcion
+                                         -> from inscripciones i
+                                         -> join alumnos a on i.id_alumno = a.id_alumno
+                                         -> join cursos c on i.id_curso = c.id_curso;
+ERROR: 1054 (42S22): Unknown column 'c.nombre_curso' in 'field list'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre as nombre_alumno, c.numbre_curso as nombre_curso, i.fecha_inscripcion from inscripciones i join alumnos a on i.id_alumno = a.id_alumno join cursos c on i.id_curso = c.id_curso;
++----------------+-------------------+-------------------+
+| nombre_alumno  | nombre_curso      | fecha_inscripcion |
++----------------+-------------------+-------------------+
+| Ana Lopez      | Base de Datos     | 2025-05-01        |
+| Ana Lopez      | Contabilidad      | 2025-05-01        |
+| Carlos Perez   | Base de Datos     | 2025-05-02        |
+| Carlos Perez   | Marketing Digital | 2025-05-02        |
+| Luisa Martinez | Contabilidad      | 2025-05-03        |
++----------------+-------------------+-------------------+
+5 rows in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select c.numbre_curso, a.nombre as nombre_alumno, i.fecha_inscripcion
+                                         -> from curso c
+                                         -> left join inscripciones i on c.id_curso = i.id_curso
+                                         -> left join alumnos a on i.id_alumno = a.id_alumno;
+ERROR: 1146 (42S02): Table 'exa2_tbd.curso' doesn't exist
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select c.numbre_curso, a.nombre as nombre_alumno, i.fecha_inscripcion from curso c left join inscripciones i on c.id_curso = i.id_cursos left join alumnos a on i.id_alumno = a.id_alumno;
+ERROR: 1146 (42S02): Table 'exa2_tbd.curso' doesn't exist
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select c.numbre_curso, a.nombre as nombre_alumno, i.fecha_inscripcion from cursos c left join inscripciones i on c.id_curso = i.id_curso left join alumnos a on i.id_alumno = a.id_alumno;
++-------------------+----------------+-------------------+
+| numbre_curso      | nombre_alumno  | fecha_inscripcion |
++-------------------+----------------+-------------------+
+| Base de Datos     | Ana Lopez      | 2025-05-01        |
+| Base de Datos     | Carlos Perez   | 2025-05-02        |
+| Contabilidad      | Ana Lopez      | 2025-05-01        |
+| Contabilidad      | Luisa Martinez | 2025-05-03        |
+| Marketing Digital | Carlos Perez   | 2025-05-02        |
++-------------------+----------------+-------------------+
+5 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre as al                                           select a.nombre as nombrselect a.nombre as nombre^C
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre as nombre_alumno, c.nombre_curso, i.fecha_inscripcion
+                                         -> from alumnos a
+                                         -> left join inscripciones i on a.id_alumno = i.id_alumno
+                                         -> left join cursos c on i.id_curso = c.id_curso;
+ERROR: 1054 (42S22): Unknown column 'c.nombre_curso' in 'field list'
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > select a.nombre as nombre_alumno, c.numbre_curso, i.fecha_inscripcion from alumnos a left join inscripciones i on a.id_alumno = i.id_alumno left join cursos c on i.id_curso = c.id_curso;
++----------------+-------------------+-------------------+
+| nombre_alumno  | numbre_curso      | fecha_inscripcion |
++----------------+-------------------+-------------------+
+| Ana Lopez      | Base de Datos     | 2025-05-01        |
+| Ana Lopez      | Contabilidad      | 2025-05-01        |
+| Carlos Perez   | Base de Datos     | 2025-05-02        |
+| Carlos Perez   | Marketing Digital | 2025-05-02        |
+| Luisa Martinez | Contabilidad      | 2025-05-03        |
++----------------+-------------------+-------------------+
+5 rows in set (0.0012 sec)
+                                          
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > insert intoinscripciones (id_alumno, id_curso, fecha_inscripcion) vales
+                                         -> (99,1,'2025-0510');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'vales
+(99,1,'2025-0510')' at line 1
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL > delete from alumnos where id_alumno = 1;
+ERROR: 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`exa2_tbd`.`inscripciones`, CONSTRAINT `inscripciones_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`))
+ MySQL  localhost:3306 ssl  exa2_tbd  SQL >
